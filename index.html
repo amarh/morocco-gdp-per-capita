@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Morocco's GDP per capita since independence (1956–2022)</title>
+<meta name="description" content="How Morocco's income per person evolved from independence in 1956 to 2022, compared with Algeria, Tunisia, Egypt, Jordan, Türkiye, South Korea, Malaysia, Thailand, Indonesia, the Philippines and Vietnam. Interactive charts, tables and data downloads.">
+<meta property="og:title" content="Morocco's GDP per capita since independence">
+<meta property="og:description" content="Morocco grew 3.6-fold since 1956, but most comparable economies did much better. Interactive charts and data.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%232a78d6'/%3E%3Cpath d='M6 24 L13 16 L18 20 L26 9' stroke='white' stroke-width='3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #fbfaf7; --panel: #f2f0ea; --ink: #1a1a19; --ink2: #55544f; --ink3: #7d7c76;
+  --line: #e2e0d8; --grid: #ebe9e2; --axis: #9a9993;
+  --mar: #2a78d6; --mar-soft: #e3eefb; --neg: #e34948; --muted: #c4c3bc; --ref: #8d8c86;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --maxw: 1080px; --radius: 10px;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.6 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: var(--mar); }
+.wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 22px; }
+
+/* nav */
+.nav { position: sticky; top: 0; z-index: 20; background: rgba(251,250,247,.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.nav .wrap { display: flex; align-items: center; gap: 20px; height: 54px; overflow-x: auto; scrollbar-width: none; }
+.nav .wrap::-webkit-scrollbar { display: none; }
+.brand { font-family: var(--serif); font-size: 17px; white-space: nowrap; color: var(--ink); text-decoration: none; margin-right: auto; }
+.nav a.l { color: var(--ink2); text-decoration: none; font-size: 14px; white-space: nowrap; }
+.nav a.l:hover { color: var(--ink); }
+
+/* hero */
+.hero { padding: 64px 0 28px; }
+.kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; color: var(--mar); font-weight: 600; margin: 0 0 12px; }
+h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 5.4vw, 58px); line-height: 1.06; margin: 0 0 18px; letter-spacing: -.01em; max-width: 17ch; }
+.lede { font-size: clamp(17px, 2vw, 20px); line-height: 1.55; color: var(--ink2); max-width: 62ch; margin: 0; }
+.lede b { color: var(--ink); font-weight: 600; }
+.kpis { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 36px 0 0; }
+.kpi { background: var(--bg); padding: 18px 18px 16px; }
+.kpi .v { font-family: var(--serif); font-size: clamp(26px, 3.4vw, 36px); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.kpi .v.blue { color: var(--mar); }
+.kpi .k { font-size: 13px; color: var(--ink2); margin-top: 6px; line-height: 1.35; }
+@media (max-width: 760px) { .kpis { grid-template-columns: repeat(2, 1fr); } }
+
+/* sections */
+section { padding: 76px 0 8px; }
+h2 { font-family: var(--serif); font-weight: 400; font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; margin: 0 0 10px; letter-spacing: -.005em; }
+.sec-lede { color: var(--ink2); max-width: 70ch; margin: 0 0 22px; font-size: 17px; }
+h3 { font-size: 17px; margin: 28px 0 6px; }
+.note { font-size: 13.5px; color: var(--ink3); line-height: 1.5; margin: 10px 0 0; max-width: 80ch; }
+
+/* findings */
+.findings { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+@media (max-width: 900px) { .findings { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .findings { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border-radius: var(--radius); padding: 20px 20px 18px; }
+.card .n { font-family: var(--serif); font-size: 30px; line-height: 1; color: var(--mar); font-variant-numeric: tabular-nums; }
+.card h4 { margin: 10px 0 6px; font-size: 16px; line-height: 1.3; }
+.card p { margin: 0; font-size: 14.5px; color: var(--ink2); line-height: 1.5; }
+.callout { margin-top: 18px; border-left: 3px solid var(--mar); padding: 4px 0 4px 18px; max-width: 78ch; color: var(--ink2); }
+.callout b { color: var(--ink); }
+
+/* controls */
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin: 0 0 14px; }
+.seg { display: inline-flex; flex-wrap: wrap; max-width: 100%; border: 1px solid var(--line); border-radius: 18px; padding: 3px; background: #fff; }
+.controls > span { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; max-width: 100%; }
+.seg button { border: 0; background: transparent; font: 13.5px var(--sans); color: var(--ink2); padding: 6px 13px; border-radius: 999px; cursor: pointer; white-space: nowrap; }
+.seg button[aria-pressed="true"] { background: var(--ink); color: #fff; }
+.seg button:focus-visible, .chip:focus-visible, th button:focus-visible { outline: 2px solid var(--mar); outline-offset: 2px; }
+.ctl-label { font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--ink3); margin-right: 2px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 12px; }
+.chip { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--line); background: #fff; color: var(--ink3); font: 13px var(--sans); padding: 4px 10px 4px 8px; border-radius: 999px; cursor: pointer; }
+.chip .sw { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }
+.chip[aria-pressed="true"] { color: var(--ink); border-color: #cfcdc5; }
+.chip[aria-pressed="false"] .sw { background: transparent !important; box-shadow: inset 0 0 0 1.5px var(--muted); }
+.chip.locked { cursor: default; font-weight: 600; }
+
+/* charts */
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: var(--sans); }
+.axis text { fill: var(--ink3); font-size: 12px; }
+.axis path, .axis line { stroke: var(--axis); }
+.grid line { stroke: var(--grid); }
+.tip { position: absolute; pointer-events: none; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 6px 22px rgba(0,0,0,.09); padding: 8px 10px; font-size: 13px; line-height: 1.45; min-width: 150px; opacity: 0; transition: opacity .08s; z-index: 5; font-variant-numeric: tabular-nums; }
+.tip .h { font-weight: 600; margin-bottom: 3px; }
+.tip .r { display: flex; justify-content: space-between; gap: 16px; }
+.tip .r.me { font-weight: 600; }
+.tip .r span:first-child { display: inline-flex; align-items: center; gap: 6px; }
+.tip .d { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.fig { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 12px; }
+.fig-title { font-weight: 600; font-size: 15px; margin: 0 0 2px; }
+.fig-sub { font-size: 13px; color: var(--ink3); margin: 0 0 12px; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.two > *, .findings > *, .method > * { min-width: 0; }
+@media (max-width: 860px) { .two { grid-template-columns: 1fr; } }
+
+/* tables */
+.tw { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); background: #fff; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 9px 12px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12.5px; font-weight: 600; color: var(--ink2); background: var(--panel); vertical-align: bottom; position: sticky; top: 0; }
+th button { all: unset; cursor: pointer; display: inline-flex; gap: 4px; align-items: center; }
+th button .ar { color: var(--ink3); font-size: 10px; }
+tr.me td { background: var(--mar-soft); font-weight: 600; }
+tr.ref td { color: var(--ink3); font-style: italic; }
+td.ctx { white-space: normal; text-align: left; color: var(--ink2); min-width: 280px; font-size: 13.5px; }
+td.pos { color: #1e6b3a; } td.negv { color: #b03332; }
+tbody tr:last-child td { border-bottom: 0; }
+
+/* downloads + footer */
+.dl { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 12px; }
+.dl a { display: block; text-decoration: none; color: var(--ink); background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 16px; }
+.dl a:hover { border-color: var(--mar); }
+.dl a b { display: block; margin-bottom: 3px; }
+.dl a span { font-size: 13.5px; color: var(--ink3); }
+.method { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+@media (max-width: 760px) { .method { grid-template-columns: 1fr; } }
+.method ul { padding-left: 18px; margin: 6px 0; color: var(--ink2); font-size: 15px; }
+.method li { margin-bottom: 6px; }
+footer { margin-top: 64px; border-top: 1px solid var(--line); padding: 26px 0 40px; font-size: 13.5px; color: var(--ink3); }
+noscript p { background: #fff3cd; padding: 12px; border-radius: 8px; }
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Sections">
+  <div class="wrap">
+    <a class="brand" href="#top">Morocco · GDP per capita</a>
+    <a class="l" href="#findings">Findings</a>
+    <a class="l" href="#explorer">Explorer</a>
+    <a class="l" href="#growth">Growth ranking</a>
+    <a class="l" href="#morocco">Morocco by period</a>
+    <a class="l" href="#convergence">Catching up</a>
+    <a class="l" href="#data">Data &amp; method</a>
+  </div>
+</nav>
+
+<main id="top">
+  <header class="hero wrap">
+    <p class="kicker">Economic history · 1956–2022</p>
+    <h1>Morocco since independence: richer, but outpaced</h1>
+    <p class="lede">Between independence in 1956 and 2022, Morocco's real GDP per capita rose <b>3.6-fold</b>, from <b>$2,313</b> to <b>$8,400</b> (2011 dollars at purchasing-power parity). That is <b>1.97% a year</b>. Most economies that started at a similar level grew much faster, and Morocco slipped from 5th to 10th among twelve comparable countries.</p>
+    <div class="kpis" role="list">
+      <div class="kpi" role="listitem"><div class="v">$2,313</div><div class="k">GDP per capita in 1956</div></div>
+      <div class="kpi" role="listitem"><div class="v blue">$8,400</div><div class="k">GDP per capita in 2022</div></div>
+      <div class="kpi" role="listitem"><div class="v">1.97%</div><div class="k">Average annual growth, 11th of 12 peers</div></div>
+      <div class="kpi" role="listitem"><div class="v">13% → 14%</div><div class="k">Share of the US level, 1956 → 2022</div></div>
+    </div>
+    <noscript><p>The interactive charts need JavaScript. All figures are also in the tables and the PDF report under “Data &amp; method”.</p></noscript>
+  </header>
+
+  <section id="findings" class="wrap">
+    <h2>Key findings</h2>
+    <p class="sec-lede">Six things the data show about Morocco's income per person since independence.</p>
+    <div class="findings">
+      <div class="card"><div class="n">11th / 12</div><h4>Slow compared with peers</h4><p>Only Jordan grew more slowly among twelve emerging economies with similar income in the 1950s. The median peer grew 3.3% a year.</p></div>
+      <div class="card"><div class="n">$19,300</div><h4>The cost of the gap</h4><p>Had Morocco grown at the peer median since 1956, its GDP per capita would be about $19,300 today, 2.3 times its actual level.</p></div>
+      <div class="card"><div class="n">5th → 10th</div><h4>Overtaken</h4><p>South Korea, Thailand, Egypt, Indonesia and Tunisia all started below Morocco and ended above it. South Korea's income grew 30-fold.</p></div>
+      <div class="card"><div class="n">≈14%</div><h4>No catching up with rich economies</h4><p>Morocco stayed at 13–14% of the US level. Against Spain it fell from 49% (1956) to 18% (2000), then recovered to 25% (2022).</p></div>
+      <div class="card"><div class="n">3.8%</div><h4>Growth came late</h4><p>The 2000s were Morocco's best decade. Earlier, the 1980s debt crisis and 1990s droughts held growth near 1.3–1.4% a year.</p></div>
+      <div class="card"><div class="n">15 years</div><h4>A trend problem, not a shock problem</h4><p>Income per person fell in 15 of 66 years, mostly droughts, but Morocco's volatility is average for the group. The gap comes from a lower trend.</p></div>
+    </div>
+    <p class="callout"><b>Why it matters.</b> 2.0% versus 3.3% a year looks small, but it compounds. At 2.0% income doubles every 35 years; at 3.3% every 22 years. The stronger growth since 2000 shows faster progress is achievable.</p>
+  </section>
+
+  <section id="explorer" class="wrap">
+    <h2>Explore the trajectories</h2>
+    <p class="sec-lede">Compare Morocco with any of the peer economies. Choose a measure and a group, or switch countries on and off. Point at the chart to read the values.</p>
+    <div class="fig">
+      <div class="controls">
+        <span><span class="ctl-label">Measure</span>
+          <span class="seg" role="group" aria-label="Measure" id="seg-measure">
+            <button data-v="ppp" aria-pressed="true">Real, PPP $</button>
+            <button data-v="index" aria-pressed="false">Index 1956 = 100</button>
+            <button data-v="usd" aria-pressed="false">Current US$</button>
+          </span></span>
+        <span><span class="ctl-label">Scale</span>
+          <span class="seg" role="group" aria-label="Scale" id="seg-scale">
+            <button data-v="log" aria-pressed="true">Log</button>
+            <button data-v="linear" aria-pressed="false">Linear</button>
+          </span></span>
+      </div>
+      <div class="controls">
+        <span><span class="ctl-label">Group</span>
+          <span class="seg" role="group" aria-label="Comparison group" id="seg-group">
+            <button data-v="mena" aria-pressed="true">Maghreb &amp; Middle East</button>
+            <button data-v="asia" aria-pressed="false">Asia</button>
+            <button data-v="europe" aria-pressed="false">Spain, Portugal, US</button>
+            <button data-v="all" aria-pressed="false">All peers</button>
+          </span></span>
+      </div>
+      <div class="chips" id="chips" aria-label="Countries shown"></div>
+      <p class="fig-title" id="ex-title"></p>
+      <p class="fig-sub" id="ex-sub"></p>
+      <div class="chart" id="ch-explorer"></div>
+    </div>
+    <p class="note">Log scale: equal vertical distances mean equal percentage differences, so slopes compare growth rates. With many countries selected, peers are drawn in grey; point at a line to see its name.</p>
+  </section>
+
+  <section id="growth" class="wrap">
+    <h2>Who grew fastest since 1956?</h2>
+    <p class="sec-lede">Average annual growth of real GDP per capita, 1956–2022. Morocco grew only slightly faster than the United States, which is why it did not converge.</p>
+    <div class="fig"><div class="chart" id="ch-cagr"></div></div>
+    <h3>Summary by country</h3>
+    <p class="note" style="margin:0 0 10px">Click a column header to sort. Levels in 2011 international $ (PPP); growth is the compound annual rate. Ranks among the 12 emerging peers; Spain, Portugal and the US are references (italic).</p>
+    <div class="tw"><table id="tb-summary"><thead></thead><tbody></tbody></table></div>
+  </section>
+
+  <section id="morocco" class="wrap">
+    <h2>Morocco, period by period</h2>
+    <p class="sec-lede">Growth was weak in the first decade after independence, picked up with the 1970s phosphate boom, stalled during the debt crisis and the droughts of the 1980s–90s, and was strongest in the 2000s.</p>
+    <div class="tw"><table id="tb-periods">
+      <thead><tr><th>Period</th><th>Start</th><th>End</th><th>Growth / year</th><th style="text-align:left">Main context</th></tr></thead>
+      <tbody></tbody></table></div>
+    <div class="fig" style="margin-top:16px">
+      <p class="fig-title">Annual change in Morocco's GDP per capita, 1957–2022</p>
+      <p class="fig-sub">Falls (red) mostly coincide with drought years; 2020 is the pandemic. Identical bars before the mid-1960s reflect interpolated estimates.</p>
+      <div class="chart" id="ch-annual"></div>
+    </div>
+  </section>
+
+  <section id="convergence" class="wrap">
+    <h2>Is Morocco catching up?</h2>
+    <p class="sec-lede">Catching up means growing faster than richer countries so the gap narrows. Against the United States, Morocco's position barely changed. Against Spain, it lost ground until 2000 and has partly recovered since.</p>
+    <div class="two">
+      <div class="fig">
+        <p class="fig-title">Morocco's GDP per capita as % of the US and Spain</p>
+        <p class="fig-sub">A flat line means Morocco grew at the same pace.</p>
+        <div class="chart" id="ch-share"></div>
+      </div>
+      <div class="fig">
+        <p class="fig-title">Morocco relative to the world average</p>
+        <p class="fig-sub">Real GDP per capita, 2011 int. $ (PPP)</p>
+        <div class="tw" style="border:0"><table id="tb-world"><thead><tr><th>Year</th><th>Morocco</th><th>World</th><th>Morocco / world</th></tr></thead><tbody></tbody></table></div>
+        <p class="note">Morocco has stayed at roughly half the world average throughout (between 43% and 53%).</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="data" class="wrap">
+    <h2>Data, method and downloads</h2>
+    <div class="dl">
+      <a href="downloads/Morocco_GDP_per_capita_report.pdf" download><b>Full report (PDF)</b><span>9 pages: executive summary, charts, tables, caveats</span></a>
+      <a href="downloads/maddison_gdppc.csv" download><b>GDP per capita, PPP (CSV)</b><span>Maddison 2023, 15 countries, 1950–2022</span></a>
+      <a href="downloads/worldbank_gdppc_usd.csv" download><b>GDP per capita, US$ (CSV)</b><span>World Bank, 15 countries, 1960–2023</span></a>
+      <a href="downloads/maddison_regions.csv" download><b>World &amp; MENA averages (CSV)</b><span>Maddison 2023 regional aggregates</span></a>
+    </div>
+    <div class="method" style="margin-top:26px">
+      <div>
+        <h3>Method</h3>
+        <ul>
+          <li><b>Main measure:</b> real GDP per capita in 2011 international dollars at purchasing-power parity, Maddison Project Database 2023 (1950–2022).</li>
+          <li><b>Second measure:</b> World Bank GDP in current US dollars divided by population (1960–2023). Not adjusted for inflation; moves with exchange rates.</li>
+          <li><b>Growth</b> is the compound annual rate between the years shown. <b>Ranks</b> are among the 12 emerging peers.</li>
+          <li><b>Peers:</b> Maghreb (Algeria, Tunisia); Middle East (Egypt, Jordan, Türkiye); economies with similar 1950s income (South Korea, Malaysia, Thailand, Indonesia, Philippines, Vietnam). References: Spain, Portugal, United States.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Caveats</h3>
+        <ul>
+          <li>1950s estimates are rough; Morocco's series is interpolated before the mid-1960s. Measured from 1960, Morocco's growth is 2.2% a year instead of 2.0%; the rankings do not change.</li>
+          <li>1956 is Morocco's independence year; for Algeria (1962) and Malaysia (1957) it precedes their own.</li>
+          <li>PPP and exchange-rate measures can rank countries differently (Egypt is above Morocco at PPP, below it in US dollars after its devaluations).</li>
+          <li>The World Bank series here is an earlier release; the latest gives Morocco about $3,814 (2023) and $4,153 (2024).</li>
+        </ul>
+      </div>
+    </div>
+    <h3>Sources</h3>
+    <ul class="note" style="padding-left:18px">
+      <li>Bolt, J. and van Zanden, J. L. (2024). Maddison Project Database, version 2023. Groningen Growth and Development Centre, University of Groningen.</li>
+      <li>World Bank, World Development Indicators: GDP (current US$) and population, total.</li>
+    </ul>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">Morocco's GDP per capita since independence · Data: Maddison Project Database 2023; World Bank WDI · Last updated November 2026.</div>
+</footer>
+
+<script src="d3.v7.min.js"></script>
+<script src="data.js"></script>
+<script>
+(function () {
+  const DATA = window.GDP_DATA, N = DATA.names;
+  const SER = ['#2a78d6', '#eb6834', '#1baf7a', '#eda100', '#e87ba4', '#008300', '#6250d6'];
+  // Colour follows the country, fixed within its group.
+  const COLOR = { MAR: SER[0], DZA: SER[1], TUN: SER[2], EGY: SER[3], JOR: SER[4], TUR: SER[5],
+    KOR: SER[1], MYS: SER[2], THA: SER[3], IDN: SER[4], PHL: SER[5], VNM: SER[6], ESP: SER[1], PRT: SER[2], USA: SER[3] };
+  const GROUPS = { mena: ['DZA', 'TUN', 'EGY', 'JOR', 'TUR'], asia: ['KOR', 'MYS', 'THA', 'IDN', 'PHL', 'VNM'],
+    europe: ['ESP', 'PRT', 'USA'], all: ['DZA', 'TUN', 'EGY', 'JOR', 'TUR', 'KOR', 'MYS', 'THA', 'IDN', 'PHL', 'VNM'] };
+  const ALL = ['DZA', 'TUN', 'EGY', 'JOR', 'TUR', 'KOR', 'MYS', 'THA', 'IDN', 'PHL', 'VNM', 'ESP', 'PRT', 'USA'];
+  const st = { measure: 'ppp', scale: 'log', group: 'mena', sel: new Set(GROUPS.mena) };
+  const fUsd = d3.format('$,.0f'), fInt = d3.format(',.0f');
+  const kUsd = v => v >= 1000 ? '$' + d3.format('~')(v / 1000) + 'k' : '$' + d3.format('~')(v);
+  const p1 = v => (Math.abs(v) < 0.05 ? 0 : v).toFixed(1) + '%';
+  const kEnd = v => v >= 1000 ? '$' + (v / 1000).toFixed(1) + 'k' : '$' + Math.round(v);
+  const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1) + '%';
+
+  function logTicks(lo, hi) { const t = []; for (let e = Math.floor(Math.log10(lo)); e <= Math.ceil(Math.log10(hi)); e++) for (const m of [1, 2, 5]) { const v = m * 10 ** e; if (v >= lo && v <= hi) t.push(v); } return t; }
+  function measure(svg, txt) { const g = svg.append('g').attr('class', 'axis'); let w = 0; txt.forEach(s => { w = Math.max(w, g.append('text').text(s).node().getComputedTextLength()); }); g.remove(); return w; }
+  function tipAt(box, tip, px, py) { const tw = tip.offsetWidth, bw = box.clientWidth; let l = px + 16; if (l + tw > bw) l = Math.max(0, px - tw - 16); tip.style.left = l + 'px'; tip.style.top = py + 'px'; }
+  function rowsHTML(tip, head, items) {
+    tip.replaceChildren(); const h = document.createElement('div'); h.className = 'h'; h.textContent = head; tip.appendChild(h);
+    items.forEach(it => { const r = document.createElement('div'); r.className = 'r' + (it.me ? ' me' : ''); const a = document.createElement('span');
+      if (it.c) { const d = document.createElement('i'); d.className = 'd'; d.style.background = it.c; a.appendChild(d); }
+      a.appendChild(document.createTextNode(it.n)); const b = document.createElement('span'); b.textContent = it.v; r.append(a, b); tip.appendChild(r); });
+  }
+
+  /* ---------- generic line chart ---------- */
+  function lineChart(el, o) {
+    el.replaceChildren();
+    const W = Math.max(300, el.clientWidth), H = Math.round(Math.max(260, Math.min(460, W * 0.5)));
+    const series = o.series.filter(s => s.pts.length);
+    const all = series.flatMap(s => s.pts);
+    const [x0, x1] = d3.extent(all, d => d[0]); const lo = d3.min(all, d => d[1]), hi = d3.max(all, d => d[1]);
+    const y = o.log ? d3.scaleLog().domain([lo * 0.85, hi * 1.15]) : d3.scaleLinear().domain([0, hi * 1.06]).nice();
+    const ticks = o.log ? logTicks(...y.domain()) : y.ticks(6);
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', o.aria);
+    const m = { t: 8, r: o.endLabels ? 0 : 12, b: 28, l: Math.ceil(measure(svg, ticks.map(o.fmt))) + 14 };
+    let endW = 0;
+    if (o.endLabels) { endW = Math.ceil(measure(svg, series.map(s => s.name + '  ' + o.endFmt(s.pts[s.pts.length - 1][1])))) + 14; m.r = endW; }
+    y.range([H - m.b, m.t]); const x = d3.scaleLinear().domain([x0, x1]).range([m.l, W - m.r]);
+    svg.append('g').attr('class', 'grid').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y);
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues(ticks).tickFormat(o.fmt).tickSize(0).tickPadding(8)).call(g => g.select('.domain').remove());
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).ticks(Math.max(3, Math.min(9, Math.floor((W - m.l - m.r) / 70)))).tickFormat(d3.format('d')).tickSizeOuter(0));
+    if (o.ref != null) svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(o.ref)).attr('y2', y(o.ref)).attr('stroke', 'var(--axis)').attr('stroke-dasharray', '3 4');
+    const line = d3.line().x(d => x(d[0])).y(d => y(d[1]));
+    const ord = series.slice().sort((a, b) => (a.me ? 1 : 0) - (b.me ? 1 : 0));
+    const paths = svg.append('g').selectAll('path').data(ord).join('path').attr('fill', 'none').attr('d', s => line(s.pts))
+      .attr('stroke', s => s.c).attr('stroke-width', s => s.me ? 3 : 1.7).attr('stroke-linejoin', 'round').attr('stroke-linecap', 'round');
+    if (o.endLabels) {
+      const L = series.map(s => ({ s, y: y(s.pts[s.pts.length - 1][1]) })).sort((a, b) => a.y - b.y);
+      for (let i = 1; i < L.length; i++) if (L[i].y - L[i - 1].y < 14) L[i].y = L[i - 1].y + 14;
+      const shift = Math.max(0, L.length ? L[L.length - 1].y - (H - m.b) : 0); L.forEach(l => l.y -= shift);
+      svg.append('g').selectAll('text').data(L).join('text').attr('x', W - m.r + 8).attr('y', d => d.y).attr('dy', '0.35em')
+        .attr('font-size', 12).attr('fill', d => d.s.me ? 'var(--ink)' : 'var(--ink2)').attr('font-weight', d => d.s.me ? 600 : 400)
+        .text(d => d.s.name + '  ' + o.endFmt(d.s.pts[d.s.pts.length - 1][1]));
+    }
+    const rule = svg.append('line').attr('y1', m.t).attr('y2', H - m.b).attr('stroke', 'var(--axis)').style('display', 'none');
+    const dots = svg.append('g');
+    const tip = document.createElement('div'); tip.className = 'tip'; el.appendChild(tip);
+    const hide = () => { tip.style.opacity = 0; rule.style('display', 'none'); dots.selectAll('*').remove(); paths.attr('opacity', 1); };
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent').style('touch-action', 'pan-y')
+      .on('pointermove', ev => {
+        const [mx, my] = d3.pointer(ev); const yr = Math.round(x.invert(mx));
+        const at = series.map(s => ({ s, p: s.pts.find(p => p[0] === yr) })).filter(d => d.p).sort((a, b) => b.p[1] - a.p[1]);
+        if (!at.length) return hide();
+        let near = null; if (o.greyMode) { near = d3.least(at, d => Math.abs(y(d.p[1]) - my)); paths.attr('opacity', s => s.me || s === near.s ? 1 : .35).attr('stroke', s => s.me ? s.c : s === near.s ? 'var(--ink)' : s.c); }
+        rule.attr('x1', x(yr)).attr('x2', x(yr)).style('display', null);
+        dots.selectAll('circle').data(at).join('circle').attr('r', 4).attr('cx', x(yr)).attr('cy', d => y(d.p[1])).attr('fill', d => d.s.c).attr('stroke', '#fff').attr('stroke-width', 1.5);
+        rowsHTML(tip, String(yr), at.map(d => ({ n: d.s.name, v: o.tipFmt(d.p[1]), c: d.s.c, me: d.s.me || (near && d.s === near.s) })));
+        tip.style.opacity = 1; tipAt(el, tip, x(yr) * el.clientWidth / W, 4);
+      })
+      .on('pointerleave', () => { hide(); if (o.greyMode) paths.attr('stroke', s => s.c); });
+  }
+
+  /* ---------- explorer ---------- */
+  const chipsEl = document.getElementById('chips');
+  function chipColor(c) { return c === 'MAR' ? COLOR.MAR : COLOR[c]; }
+  function greyMode() { const cols = [...st.sel].map(c => COLOR[c]); return st.sel.size > 6 || new Set(cols).size < cols.length; }
+  function renderChips() {
+    chipsEl.replaceChildren();
+    ['MAR', ...ALL].forEach(c => {
+      const b = document.createElement('button'); b.className = 'chip' + (c === 'MAR' ? ' locked' : ''); b.type = 'button';
+      const on = c === 'MAR' || st.sel.has(c); b.setAttribute('aria-pressed', on);
+      const sw = document.createElement('span'); sw.className = 'sw'; sw.style.background = c === 'MAR' ? COLOR.MAR : (greyMode() ? 'var(--muted)' : COLOR[c]);
+      b.append(sw, document.createTextNode(N[c]));
+      if (c !== 'MAR') b.addEventListener('click', () => { st.sel.has(c) ? st.sel.delete(c) : st.sel.add(c); st.group = null; syncSeg('seg-group', null); renderChips(); drawExplorer(); });
+      else b.title = 'Morocco is always shown';
+      chipsEl.appendChild(b);
+    });
+  }
+  function seriesFor(code) {
+    const s = DATA.series[code]; if (!s) return [];
+    if (st.measure === 'usd') return s.usd;
+    if (st.measure === 'index') { const b = s.ppp[0][1]; return s.ppp.map(p => [p[0], Math.round(p[1] / b * 1000) / 10]); }
+    return s.ppp;
+  }
+  function drawExplorer() {
+    const grey = greyMode();
+    const codes = ['MAR', ...ALL.filter(c => st.sel.has(c))];
+    const series = codes.map(c => ({ code: c, name: N[c], me: c === 'MAR', c: c === 'MAR' ? COLOR.MAR : grey ? 'var(--muted)' : COLOR[c], pts: seriesFor(c) }));
+    const M = { ppp: ['Real GDP per capita, 1956–2022', '2011 international dollars at purchasing-power parity · Maddison Project Database 2023', kUsd, fUsd],
+      index: ['Growth since independence, 1956 = 100', 'Each country\'s GDP per capita relative to its own 1956 level · Maddison Project Database 2023', d3.format('~'), v => fInt(v) + ' (×' + (v / 100).toFixed(1) + ')'],
+      usd: ['GDP per capita at market exchange rates, 1960–2023', 'Current US dollars, not adjusted for inflation · World Bank WDI (earlier release)', kUsd, fUsd] }[st.measure];
+    document.getElementById('ex-title').textContent = M[0];
+    document.getElementById('ex-sub').textContent = M[1] + (st.scale === 'log' ? ' · log scale' : '');
+    lineChart(document.getElementById('ch-explorer'), { series, log: st.scale === 'log', fmt: M[2], tipFmt: M[3], ref: st.measure === 'index' ? 100 : null,
+      endLabels: !grey && document.getElementById('ch-explorer').clientWidth > 640, endFmt: st.measure === 'index' ? v => '×' + (v / 100).toFixed(1) : kEnd, greyMode: grey,
+      aria: M[0] + ' for Morocco and ' + (codes.length - 1) + ' comparison countries' });
+  }
+  function syncSeg(id, v) { document.querySelectorAll('#' + id + ' button').forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v)); }
+  function bindSeg(id, key, after) { document.querySelectorAll('#' + id + ' button').forEach(b => b.addEventListener('click', () => { st[key] = b.dataset.v; syncSeg(id, b.dataset.v); after && after(b.dataset.v); drawExplorer(); })); }
+  bindSeg('seg-measure', 'measure'); bindSeg('seg-scale', 'scale');
+  bindSeg('seg-group', 'group', v => { st.sel = new Set(GROUPS[v]); renderChips(); });
+
+  /* ---------- CAGR bars ---------- */
+  function drawCagr() {
+    const el = document.getElementById('ch-cagr'); el.replaceChildren();
+    const rows = DATA.summary.slice().sort((a, b) => b.g - a.g);
+    const W = Math.max(300, el.clientWidth), bh = 22, gap = 7, H = rows.length * (bh + gap) + 26;
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Average annual growth of GDP per capita 1956 to 2022 by country, sorted');
+    const lw = Math.ceil(measure(svg, rows.map(r => r.name))) + 12, vw = 52;
+    const x = d3.scaleLinear().domain([0, 6]).range([lw, W - vw]);
+    svg.append('g').attr('class', 'grid').selectAll('line').data([1, 2, 3, 4, 5, 6]).join('line').attr('x1', x).attr('x2', x).attr('y1', 0).attr('y2', H - 22);
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - 22})`).call(d3.axisBottom(x).ticks(6).tickFormat(v => v + '%').tickSizeOuter(0));
+    const g = svg.append('g').selectAll('g').data(rows).join('g').attr('transform', (d, i) => `translate(0,${i * (bh + gap)})`);
+    g.append('text').attr('x', lw - 10).attr('y', bh / 2).attr('dy', '0.35em').attr('text-anchor', 'end').attr('font-size', 13)
+      .attr('fill', d => d.code === 'MAR' ? 'var(--ink)' : 'var(--ink2)').attr('font-weight', d => d.code === 'MAR' ? 700 : 400).attr('font-style', d => d.ref ? 'italic' : null).text(d => d.name);
+    g.append('rect').attr('x', x(0)).attr('height', bh).attr('rx', 3).attr('width', d => x(d.g) - x(0))
+      .attr('fill', d => d.code === 'MAR' ? 'var(--mar)' : d.ref ? 'var(--ref)' : 'var(--muted)');
+    g.append('text').attr('x', d => x(d.g) + 7).attr('y', bh / 2).attr('dy', '0.35em').attr('font-size', 12.5).attr('font-variant-numeric', 'tabular-nums')
+      .attr('fill', d => d.code === 'MAR' ? 'var(--ink)' : 'var(--ink2)').attr('font-weight', d => d.code === 'MAR' ? 700 : 400).text(d => d.g.toFixed(2) + '%');
+  }
+
+  /* ---------- summary table ---------- */
+  const COLS = [['name', 'Country', null], ['y1956', '1956', fUsd], ['y2022', '2022', fUsd], ['mult', 'Multiple', v => '×' + v.toFixed(1)], ['g', 'Growth 1956–2022', v => v.toFixed(2) + '%'],
+    ['g1', '1956–80', p1], ['g2', '1980–2000', p1], ['g3', '2000–22', p1],
+    ['us56', '% of US 1956', v => v.toFixed(1) + '%'], ['us22', '% of US 2022', v => v.toFixed(1) + '%'], ['r56', 'Rank 1956', v => v == null ? '—' : v], ['r22', 'Rank 2022', v => v == null ? '—' : v]];
+  let sortKey = 'y2022', sortDir = -1;
+  function drawSummary() {
+    const t = document.getElementById('tb-summary'), th = t.tHead, tb = t.tBodies[0];
+    th.replaceChildren(); const hr = th.insertRow();
+    COLS.forEach(([k, label]) => { const c = document.createElement('th'); const b = document.createElement('button'); b.type = 'button';
+      const ar = document.createElement('span'); ar.className = 'ar'; ar.textContent = sortKey === k ? (sortDir < 0 ? '▼' : '▲') : '';
+      b.append(document.createTextNode(label), ar); c.setAttribute('aria-sort', sortKey === k ? (sortDir < 0 ? 'descending' : 'ascending') : 'none');
+      b.addEventListener('click', () => { if (sortKey === k) sortDir = -sortDir; else { sortKey = k; sortDir = k === 'name' || k.startsWith('r') ? 1 : -1; } drawSummary(); });
+      c.appendChild(b); hr.appendChild(c); });
+    const rows = DATA.summary.slice().sort((a, b) => { const va = a[sortKey], vb = b[sortKey];
+      if (va == null) return 1; if (vb == null) return -1; return (typeof va === 'string' ? va.localeCompare(vb) : va - vb) * sortDir; });
+    tb.replaceChildren();
+    rows.forEach(r => { const tr = tb.insertRow(); if (r.code === 'MAR') tr.className = 'me'; else if (r.ref) tr.className = 'ref';
+      COLS.forEach(([k, , f]) => { const td = tr.insertCell(); td.textContent = f ? f(r[k]) : r[k]; }); });
+  }
+
+  /* ---------- periods ---------- */
+  function drawPeriods() {
+    const tb = document.querySelector('#tb-periods tbody'); tb.replaceChildren();
+    DATA.periods.forEach(p => { const tr = tb.insertRow();
+      [p.a + '–' + p.b, fUsd(p.va), fUsd(p.vb), sgn(p.g)].forEach((v, i) => { const td = tr.insertCell(); td.textContent = v; if (i === 3) td.className = p.g < 0 ? 'negv' : 'pos'; });
+      const c = tr.insertCell(); c.className = 'ctx'; c.textContent = p.ctx; });
+    const s = DATA.summary.find(r => r.code === 'MAR'); const tr = tb.insertRow(); tr.className = 'me';
+    ['1956–2022', fUsd(s.y1956), fUsd(s.y2022), sgn(s.g), 'Whole period since independence'].forEach((v, i) => { const td = tr.insertCell(); td.textContent = v; if (i === 4) td.className = 'ctx'; });
+  }
+
+  /* ---------- annual growth bars ---------- */
+  function drawAnnual() {
+    const el = document.getElementById('ch-annual'); el.replaceChildren();
+    const rows = DATA.growth, W = Math.max(300, el.clientWidth), H = Math.round(Math.max(220, Math.min(320, W * 0.36)));
+    const svg = d3.select(el).append('svg').attr('viewBox', `0 0 ${W} ${H}`).attr('role', 'img').attr('aria-label', 'Annual percentage change in Morocco GDP per capita, 1957 to 2022');
+    const y = d3.scaleLinear().domain([-12, 12]); const ticks = [-10, -5, 0, 5, 10];
+    const m = { t: 8, r: 6, b: 26, l: Math.ceil(measure(svg, ticks.map(v => v + '%'))) + 14 }; y.range([H - m.b, m.t]);
+    const x = d3.scaleBand().domain(rows.map(r => r[0])).range([m.l, W - m.r]).padding(0.22);
+    svg.append('g').attr('class', 'grid').selectAll('line').data(ticks).join('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y).attr('y2', y);
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(${m.l},0)`).call(d3.axisLeft(y).tickValues(ticks).tickFormat(v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v) + '%').tickSize(0).tickPadding(8)).call(g => g.select('.domain').remove());
+    const every = W < 560 ? 20 : 10;
+    svg.append('g').attr('class', 'axis').attr('transform', `translate(0,${H - m.b})`).call(d3.axisBottom(x).tickValues(rows.map(r => r[0]).filter(v => v % every === 0)).tickSizeOuter(0));
+    svg.append('line').attr('x1', m.l).attr('x2', W - m.r).attr('y1', y(0)).attr('y2', y(0)).attr('stroke', 'var(--axis)');
+    const bars = svg.append('g').selectAll('rect').data(rows).join('rect').attr('x', d => x(d[0])).attr('width', x.bandwidth()).attr('rx', 1.5)
+      .attr('y', d => y(Math.max(0, d[1]))).attr('height', d => Math.max(1, Math.abs(y(d[1]) - y(0)))).attr('fill', d => d[1] < 0 ? 'var(--neg)' : 'var(--mar)');
+    const tip = document.createElement('div'); tip.className = 'tip'; el.appendChild(tip);
+    svg.append('rect').attr('x', m.l).attr('y', m.t).attr('width', W - m.l - m.r).attr('height', H - m.t - m.b).attr('fill', 'transparent').style('touch-action', 'pan-y')
+      .on('pointermove', ev => { const [mx] = d3.pointer(ev); const i = Math.max(0, Math.min(rows.length - 1, Math.floor((mx - m.l) / x.step()))); const d = rows[i];
+        bars.attr('opacity', r => r === d ? 1 : .55); rowsHTML(tip, String(d[0]), [{ n: 'GDP per capita', v: sgn(d[1]), me: true }]);
+        tip.style.opacity = 1; tipAt(el, tip, (x(d[0]) + x.bandwidth() / 2) * el.clientWidth / W, 4); })
+      .on('pointerleave', () => { tip.style.opacity = 0; bars.attr('opacity', 1); });
+  }
+
+  /* ---------- share + world ---------- */
+  function drawShare() {
+    const el = document.getElementById('ch-share');
+    lineChart(el, { series: [{ name: '% of US', me: true, c: SER[0], pts: DATA.share.map(r => [r[0], r[1]]) }, { name: '% of Spain', me: false, c: SER[1], pts: DATA.share.map(r => [r[0], r[2]]) }],
+      log: false, fmt: v => v + '%', tipFmt: v => v.toFixed(1) + '%', endLabels: true, endFmt: v => v.toFixed(0) + '%',
+      aria: 'Morocco GDP per capita as a percentage of the US and Spanish levels, 1956 to 2022' });
+  }
+  function drawWorld() {
+    const tb = document.querySelector('#tb-world tbody'); tb.replaceChildren();
+    const mar = Object.fromEntries(DATA.series.MAR.ppp);
+    DATA.world.forEach(([y, w]) => { const tr = tb.insertRow(); [String(y), fUsd(mar[y]), fUsd(w), (mar[y] / w * 100).toFixed(0) + '%'].forEach(v => { tr.insertCell().textContent = v; }); });
+  }
+
+  function drawAll() { drawExplorer(); drawCagr(); drawAnnual(); drawShare(); }
+  renderChips(); drawSummary(); drawPeriods(); drawWorld(); drawAll();
+  let rt, lastW = document.querySelector('main').clientWidth;
+  const ro = new ResizeObserver(() => { const w = document.querySelector('main').clientWidth; if (w === lastW) return; lastW = w; clearTimeout(rt); rt = setTimeout(drawAll, 120); });
+  ro.observe(document.querySelector('main'));
+})();
+</script>
+</body>
+</html>
